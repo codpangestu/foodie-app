@@ -1,9 +1,233 @@
 {
-  "users": [],
-  "categories": [],
-  "products": [],
-  "carts": [],
-  "cart_items": [],
-  "orders": [],
-  "order_items": []
+  "users": [
+    {
+      "id": "1",
+      "name": "Budi Santoso",
+      "email": "budi@foodie.com",
+      "role": "customer",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80",
+      "address": "Jl. Sudirman No. 45, Jakarta Selatan"
+    },
+    {
+      "id": "2",
+      "name": "Admin Foodie",
+      "email": "admin@foodie.com",
+      "role": "admin",
+      "avatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=200&auto=format&fit=crop&q=80",
+      "address": "Foodie HQ, Jakarta Pusat"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Makanan Utama",
+      "icon": "restaurant"
+    },
+    {
+      "id": "cat-2",
+      "name": "Minuman",
+      "icon": "local_drink"
+    },
+    {
+      "id": "cat-3",
+      "name": "Camilan",
+      "icon": "lunch_dining"
+    },
+    {
+      "id": "cat-4",
+      "name": "Dessert",
+      "icon": "icecream"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Nasi Goreng Spesial",
+      "description": "Nasi goreng dengan bumbu rempah autentik, telur mata sapi, suwiran ayam gurih, acar segar, dan kerupuk renyah.",
+      "price": 28000,
+      "categoryId": "cat-1",
+      "categoryName": "Makanan Utama",
+      "imageUrl": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAYmVYSWZNTQAqAAAACAAEAQAABAAAAAEAAAAAAQEABAAAAAEAAAAAh2kABAAAAAEAAAA+ARIAAwAAAAEAAAAAAAAAAAABkggAAwAAAAEAAAAAAAAAAAABARIAAwAAAAEAAAAAAAAAAADYWh0AAAAEc0JJVAgICAh8CGSIAAADbElEQVR4nO3bv08TUQDA8e8r9K4gxHYxMSZGN926qhODe40xcYTFf0ddWUrioIkxNgwYcSioFMRfdXVyMAElaIEY0qb0OTxLCCnl7t67e+9qvwkhIXfvvXxyXHuvAMOGDRtmL2F7AUErVWV+1GtWgaKpMQVy5umNsbn+x6QgWzjqOMeziaOOdTjbOOp4R3MBR53jYK7gqPMcyyUcda5DuYajznckF3HUGA7kKo4ax3Iu46ixLOY6jhrPUmnAUWNaKC04atyESxOOGjvB0oajxk+oNOKoORIorThqnphLM46aK8bSjqPmi6lBwFFzxtCg4Kh5DTdIOGpugw0ajprfUIOIo9ZgoEHFUevQbJBxQBNo0HFAA+h/wIGIQLZwbteaJSE7xuaUIlN/dt2v9DtmNOygtnDurOxPSynLBl946wdN78HpawuRVRxE2dScQL3d8qcqU6Jx2oEZg5OGznUciHC9mrqK0oADlm7SacEBCy/zacIBjXtQZUo02i1/CqgHPScIzs2qOzigeZMOgxQE58qL/env+7LcaEmdZR1NCwcSelgNiiOkPLxyLowJ8p7W8rRxIIHtjig43TSQjOBAzBtmOjjdIiAZw4EYt1wF8qEuTrcQSEZxwOJfdwTF6RYAyTgOwIjJwYIWFgdgrw1eBnIjPZFiwQELQFFwup2AFBsOJAykg9PtGFKsOJAg0NWFPyUBj02MtdcGubP9LecVrsWJAxE2zKLmN1tLTd+vY2Avae9Lja/vPl86yJ4tAXPai+tTYvtB9VuFht9shnp269Vu/S0ba5/oeJOIjChzd3bazAp7l+iGmS7S7sclNlc/0PEmQailCxkvUuI7ilGRdtYW2ait08lOgBBw5Hk2TiQrW65hkRqvK2yu1JDZM4dXzvHiQrK2Jx0U6dfLR/x4s4wcHQMESKm+ehQHktVN+9OQtudn+bm8iBzJ/ftJB5DqV0z0fuwwjWQVCE5G2p6fZevNK2TGAyRkc5AdV99F/7dvJpGs/zNLt+Lz3/mm71eB4iHO5HlE4SJMnINM+Pe0UsgZntyb01mXM0CgkDZWF6pb6++LsnAZvHHtMXWRnAICoHQ/L7zxKiJj8DP46EjuAQGUynnht41+xB0VyU0gcAbJXSBwAsltILCO5D4QWEVKBxBYv5KGDRs2zEZ/AT9QmP72ylKVAAAAAElFTkSuQmCC",
+      "rating": 4.8,
+      "reviewCount": 120,
+      "stock": 25,
+      "isAvailable": true
+    },
+    {
+      "id": "2",
+      "name": "Mie Ayam Bakso",
+      "description": "Mie kenyal gurih dengan topping daging ayam cincang manis gurih, kuah kaldu segar, dan bakso sapi urat premium.",
+      "price": 25000,
+      "categoryId": "cat-1",
+      "categoryName": "Makanan Utama",
+      "imageUrl": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.7,
+      "reviewCount": 95,
+      "stock": 20,
+      "isAvailable": true
+    },
+    {
+      "id": "3",
+      "name": "Ayam Bakar Madu",
+      "description": "Potongan ayam pejantan dipanggang dengan olesan madu dan rempah rahasia, disajikan lengkap dengan sambal terasi dan lalapan.",
+      "price": 35000,
+      "categoryId": "cat-1",
+      "categoryName": "Makanan Utama",
+      "imageUrl": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "reviewCount": 180,
+      "stock": 15,
+      "isAvailable": true
+    },
+    {
+      "id": "4",
+      "name": "Burger Sapi Keju Double",
+      "description": "Double patty daging sapi Australia juicy, lapisan keju cheddar leleh, selada renyah, tomat segar, dan saus burger spesial.",
+      "price": 42000,
+      "categoryId": "cat-1",
+      "categoryName": "Makanan Utama",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.8,
+      "reviewCount": 150,
+      "stock": 30,
+      "isAvailable": true
+    },
+    {
+      "id": "5",
+      "name": "Es Teh Manis Melati",
+      "description": "Seduhan daun teh melati pilihan dengan tingkat kemanisan pas, disajikan dingin dengan es batu kristal higienis.",
+      "price": 6000,
+      "categoryId": "cat-2",
+      "categoryName": "Minuman",
+      "imageUrl": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.6,
+      "reviewCount": 210,
+      "stock": 50,
+      "isAvailable": true
+    },
+    {
+      "id": "6",
+      "name": "Jus Alpukat Cokelat",
+      "description": "Jus alpukat mentega segar kental berpadu dengan siraman susu kental manis cokelat premium.",
+      "price": 18000,
+      "categoryId": "cat-2",
+      "categoryName": "Minuman",
+      "imageUrl": "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.9,
+      "reviewCount": 134,
+      "stock": 20,
+      "isAvailable": true
+    },
+    {
+      "id": "7",
+      "name": "Kentang Goreng Keju",
+      "description": "Kentang goreng crinkle renyah di luar lembut di dalam, bertabur bumbu keju lezat dengan saus tomat dan cabai.",
+      "price": 16000,
+      "categoryId": "cat-3",
+      "categoryName": "Camilan",
+      "imageUrl": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.7,
+      "reviewCount": 88,
+      "stock": 40,
+      "isAvailable": true
+    },
+    {
+      "id": "8",
+      "name": "Pancake Strawberry Cokelat",
+      "description": "Dua tumpuk pancake hangat lembut dengan topping sirup maple, saus cokelat lumer, dan potongan buah strawberry segar.",
+      "price": 24000,
+      "categoryId": "cat-4",
+      "categoryName": "Dessert",
+      "imageUrl": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600&auto=format&fit=crop&q=80",
+      "rating": 4.8,
+      "reviewCount": 76,
+      "stock": 15,
+      "isAvailable": true
+    },
+    {
+      "id": "1793554555935",
+      "name": "mbg",
+      "description": "manis banget",
+      "price": 25000,
+      "categoryId": "cat-1",
+      "categoryName": "Makanan Utama",
+      "imageUrl": "https://i.pinimg.com/1200x/cb/2a/fc/cb2afca1ca4a405ecc95b5d7831c59c6.jpg",
+      "rating": 4.8,
+      "reviewCount": 1,
+      "stock": 1,
+      "isAvailable": true
+    }
+  ],
+  "carts": [
+    {
+      "id": "1",
+      "productId": "1",
+      "productName": "Nasi Goreng Spesial",
+      "price": 28000,
+      "imageUrl": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&auto=format&fit=crop&q=80",
+      "quantity": 2,
+      "note": "Pedas sedang, tanpa bawang goreng"
+    },
+    {
+      "id": "2",
+      "productId": "5",
+      "productName": "Es Teh Manis Melati",
+      "price": 6000,
+      "imageUrl": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&auto=format&fit=crop&q=80",
+      "quantity": 2,
+      "note": "Sedikit es"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-20261101-001",
+      "orderDate": "2026-11-01T19:30:00Z",
+      "customerName": "Budi Santoso",
+      "customerAddress": "Jl. Sudirman No. 45, Jakarta Selatan",
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Ayam Bakar Madu",
+          "price": 35000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&auto=format&fit=crop&q=80"
+        },
+        {
+          "productId": "6",
+          "productName": "Jus Alpukat Cokelat",
+          "price": 18000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&auto=format&fit=crop&q=80"
+        }
+      ],
+      "totalAmount": 53000,
+      "status": "Selesai",
+      "paymentMethod": "QRIS"
+    },
+    {
+      "id": "ORD-54464177",
+      "orderDate": "2026-11-02T01:34:24.178246",
+      "customerName": "Budi Santoso",
+      "customerAddress": "Jl. Sudirman No. 45, Jakarta Selatan",
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Nasi Goreng Spesial",
+          "price": 28000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&auto=format&fit=crop&q=80"
+        },
+        {
+          "productId": "2",
+          "productName": "Mie Ayam Bakso",
+          "price": 25000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80"
+        }
+      ],
+      "totalAmount": 53000,
+      "status": "Diproses",
+      "paymentMethod": "QRIS"
+    }
+  ]
 }

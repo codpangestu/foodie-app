@@ -1,122 +1,109 @@
+/*
+ * ============================================================================
+ * TUGAS: Anggota 1 - Mengintegrasikan Hasil Setiap Anggota & Main Entrypoint
+ * FASE: Fase 1 & 6 - Setup Project & Integrasi Lengkap
+ * ============================================================================
+ * 
+ * 1. APA FUNGSI FILE ATAU PERINTAH TERSEBUT:
+ *    Sebagai titik masuk utama (entry point) aplikasi Flutter `main.dart`.
+ *    File ini menginisialisasi Dependency Injection seluruh layer Clean Architecture
+ *    (Core, Data, Domain, Presentation), mendaftarkan Provider state management,
+ *    dan menjalankan `MaterialApp.router` dengan tema visual Foodie.
+ * 
+ * 2. MENGAPA KITA MEMBUTUHKANNYA:
+ *    Menggabungkan hasil kerja Anggota 1 (Setup & Integrasi), Anggota 2 (UI & Navigasi),
+ *    Anggota 3 (CRUD & Form), dan Anggota 4 (Data, REST API & Use Cases) ke dalam
+ *    satu aplikasi yang utuh dan siap dijalankan di Android.
+ * 
+ * 3. BAGAIMANA HUBUNGANNYA DENGAN CLEAN ARCHITECTURE:
+ *    Composition Root: Menghubungkan Network -> Datasources -> Repositories ->
+ *    Use Cases -> Providers -> UI Widgets.
+ * 
+ * 4. KODE LENGKAP YANG PERLU KAMU MASUKKAN:
+ *    Implementasi method `main()` dan widget `FoodieApp` di bawah.
+ * 
+ * 5. CARA MENJALANKAN DAN MENGUJINYA:
+ *    Pastikan JSON Server backend berjalan (`cd backend && npm run dev`),
+ *    lalu jalankan aplikasi dengan perintah: `flutter run`.
+ * 
+ * 6. HASIL YANG SEHARUSNYA MUNCUL:
+ *    Aplikasi Foodie terbuka dengan antarmuka modern, menampilkan daftar menu makanan,
+ *    dan terhubung langsung ke backend REST API.
+ * ============================================================================
+ */
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'core/network/api_client.dart';
+import 'core/theme/app_theme.dart';
+import 'core/utils/app_constants.dart';
+import 'features/cart/presentation/providers/cart_provider.dart';
+import 'features/navigation/app_router.dart';
+import 'features/orders/presentation/providers/order_provider.dart';
+import 'features/products/data/datasources/product_remote_data_source.dart';
+import 'features/products/data/repositories/product_repository_impl.dart';
+import 'features/products/domain/usecases/create_product.dart';
+import 'features/products/domain/usecases/delete_product.dart';
+import 'features/products/domain/usecases/get_product_by_id.dart';
+import 'features/products/domain/usecases/get_products.dart';
+import 'features/products/domain/usecases/update_product.dart';
+import 'features/products/presentation/providers/product_provider.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // 1. Core Network Client
+  final apiClient = ApiClient();
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+  // 2. Data Layer
+  final productRemoteDataSource = ProductRemoteDataSourceImpl(apiClient: apiClient);
+  final productRepository = ProductRepositoryImpl(remoteDataSource: productRemoteDataSource);
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  // 3. Domain Layer (Use Cases)
+  final getProductsUseCase = GetProducts(productRepository);
+  final getProductByIdUseCase = GetProductById(productRepository);
+  final createProductUseCase = CreateProduct(productRepository);
+  final updateProductUseCase = UpdateProduct(productRepository);
+  final deleteProductUseCase = DeleteProduct(productRepository);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+  runApp(
+    MultiProvider(
+      providers: [
+        // Provider Produk (CRUD)
+        ChangeNotifierProvider<ProductProvider>(
+          create: (_) => ProductProvider(
+            getProductsUseCase: getProductsUseCase,
+            getProductByIdUseCase: getProductByIdUseCase,
+            createProductUseCase: createProductUseCase,
+            updateProductUseCase: updateProductUseCase,
+            deleteProductUseCase: deleteProductUseCase,
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+        // Provider Keranjang Belanja
+        ChangeNotifierProvider<CartProvider>(
+          create: (_) => CartProvider(),
+        ),
+        // Provider Pesanan & Transaksi
+        ChangeNotifierProvider<OrderProvider>(
+          create: (_) => OrderProvider(apiClient: apiClient),
+        ),
+      ],
+      child: const FoodieApp(),
+    ),
+  );
+}
+
+class FoodieApp extends StatelessWidget {
+  const FoodieApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: AppConstants.appName,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      routerConfig: AppRouter.router,
     );
   }
 }
