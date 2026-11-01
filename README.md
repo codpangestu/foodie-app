@@ -393,7 +393,4 @@ Proyek ini dibuat dan dikembangkan sebagai implementasi aplikasi mobile modern b
 
 - **Pengembang**: Tim Pengembang Foodie
 - **Repositori**: [@codpangestu/foodie-app](https://github.com/codpangestu/foodie-app)
-- **Lisensi**: Dilisensikan di bawah [MIT License](LICENSE).
 
----
-*Dibuat dengan ❤️ menggunakan Flutter & Dart.*

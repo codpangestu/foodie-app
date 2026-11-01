@@ -228,6 +228,31 @@
       "totalAmount": 53000,
       "status": "Diproses",
       "paymentMethod": "QRIS"
+    },
+    {
+      "id": "ORD-61053259",
+      "orderDate": "2026-11-02T03:24:13.260328",
+      "customerName": "Budi Santoso",
+      "customerAddress": "Jl. Sudirman No. 45, Jakarta Selatan",
+      "items": [
+        {
+          "productId": "8",
+          "productName": "Pancake Strawberry Cokelat",
+          "price": 24000,
+          "quantity": 2,
+          "imageUrl": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600&auto=format&fit=crop&q=80"
+        },
+        {
+          "productId": "7",
+          "productName": "Kentang Goreng Keju",
+          "price": 16000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600&auto=format&fit=crop&q=80"
+        }
+      ],
+      "totalAmount": 64000,
+      "status": "Diproses",
+      "paymentMethod": "QRIS"
     }
   ]
 }
