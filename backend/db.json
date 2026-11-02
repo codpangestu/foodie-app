@@ -47,7 +47,7 @@
       "price": 28000,
       "categoryId": "cat-1",
       "categoryName": "Makanan Utama",
-      "imageUrl": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAYmVYSWZNTQAqAAAACAAEAQAABAAAAAEAAAAAAQEABAAAAAEAAAAAh2kABAAAAAEAAAA+ARIAAwAAAAEAAAAAAAAAAAABkggAAwAAAAEAAAAAAAAAAAABARIAAwAAAAEAAAAAAAAAAADYWh0AAAAEc0JJVAgICAh8CGSIAAADbElEQVR4nO3bv08TUQDA8e8r9K4gxHYxMSZGN926qhODe40xcYTFf0ddWUrioIkxNgwYcSioFMRfdXVyMAElaIEY0qb0OTxLCCnl7t67e+9qvwkhIXfvvXxyXHuvAMOGDRtmL2F7AUErVWV+1GtWgaKpMQVy5umNsbn+x6QgWzjqOMeziaOOdTjbOOp4R3MBR53jYK7gqPMcyyUcda5DuYajznckF3HUGA7kKo4ax3Iu46ixLOY6jhrPUmnAUWNaKC04atyESxOOGjvB0oajxk+oNOKoORIorThqnphLM46aK8bSjqPmi6lBwFFzxtCg4Kh5DTdIOGpugw0ajprfUIOIo9ZgoEHFUevQbJBxQBNo0HFAA+h/wIGIQLZwbteaJSE7xuaUIlN/dt2v9DtmNOygtnDurOxPSynLBl946wdN78HpawuRVRxE2dScQL3d8qcqU6Jx2oEZg5OGznUciHC9mrqK0oADlm7SacEBCy/zacIBjXtQZUo02i1/CqgHPScIzs2qOzigeZMOgxQE58qL/env+7LcaEmdZR1NCwcSelgNiiOkPLxyLowJ8p7W8rRxIIHtjig43TSQjOBAzBtmOjjdIiAZw4EYt1wF8qEuTrcQSEZxwOJfdwTF6RYAyTgOwIjJwYIWFgdgrw1eBnIjPZFiwQELQFFwup2AFBsOJAykg9PtGFKsOJAg0NWFPyUBj02MtdcGubP9LecVrsWJAxE2zKLmN1tLTd+vY2Avae9Lja/vPl86yJ4tAXPai+tTYvtB9VuFht9shnp269Vu/S0ba5/oeJOIjChzd3bazAp7l+iGmS7S7sclNlc/0PEmQailCxkvUuI7ilGRdtYW2ait08lOgBBw5Hk2TiQrW65hkRqvK2yu1JDZM4dXzvHiQrK2Jx0U6dfLR/x4s4wcHQMESKm+ehQHktVN+9OQtudn+bm8iBzJ/ftJB5DqV0z0fuwwjWQVCE5G2p6fZevNK2TGAyRkc5AdV99F/7dvJpGs/zNLt+Lz3/mm71eB4iHO5HlE4SJMnINM+Pe0UsgZntyb01mXM0CgkDZWF6pb6++LsnAZvHHtMXWRnAICoHQ/L7zxKiJj8DP46EjuAQGUynnht41+xB0VyU0gcAbJXSBwAsltILCO5D4QWEVKBxBYv5KGDRs2zEZ/AT9QmP72ylKVAAAAAElFTkSuQmCC",
+      "imageUrl": "https://i.pinimg.com/1200x/d3/7b/f1/d37bf17c96e03b533f0f4b1c9b130011.jpg",
       "rating": 4.8,
       "reviewCount": 120,
       "stock": 25,
@@ -156,6 +156,19 @@
       "reviewCount": 1,
       "stock": 1,
       "isAvailable": true
+    },
+    {
+      "id": "1793568579265",
+      "name": "sesajen mbg",
+      "description": "diracik dengan ide prabowo murni dengan butiran cinta tedy",
+      "price": 12000,
+      "categoryId": "cat-4",
+      "categoryName": "Dessert",
+      "imageUrl": "https://i.pinimg.com/736x/e2/c0/d4/e2c0d467fb12fab0e895928532284319.jpg",
+      "rating": 4.8,
+      "reviewCount": 1,
+      "stock": 1,
+      "isAvailable": true
     }
   ],
   "carts": [
@@ -251,6 +264,38 @@
         }
       ],
       "totalAmount": 64000,
+      "status": "Diproses",
+      "paymentMethod": "QRIS"
+    },
+    {
+      "id": "ORD-68406408",
+      "orderDate": "2026-11-02T05:26:46.408544",
+      "customerName": "Budi Santoso",
+      "customerAddress": "Jl. Sudirman No. 45, Jakarta Selatan",
+      "items": [
+        {
+          "productId": "1793554555935",
+          "productName": "mbg",
+          "price": 25000,
+          "quantity": 1,
+          "imageUrl": "https://i.pinimg.com/1200x/cb/2a/fc/cb2afca1ca4a405ecc95b5d7831c59c6.jpg"
+        },
+        {
+          "productId": "8",
+          "productName": "Pancake Strawberry Cokelat",
+          "price": 24000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600&auto=format&fit=crop&q=80"
+        },
+        {
+          "productId": "7",
+          "productName": "Kentang Goreng Keju",
+          "price": 16000,
+          "quantity": 1,
+          "imageUrl": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600&auto=format&fit=crop&q=80"
+        }
+      ],
+      "totalAmount": 65000,
       "status": "Diproses",
       "paymentMethod": "QRIS"
     }
