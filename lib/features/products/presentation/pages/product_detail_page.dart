@@ -85,7 +85,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.12),
+              color: Colors.black.withValues(alpha: 0.12),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -186,7 +186,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.star_rounded, color: AppTheme.secondaryColor, size: 18),
+                            const Icon(Icons.star_rounded, color: AppTheme.starColor, size: 18),
                             const SizedBox(width: 4),
                             Text(
                               widget.product.rating.toStringAsFixed(1),
@@ -341,7 +341,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 16,
               offset: const Offset(0, -4),
             ),

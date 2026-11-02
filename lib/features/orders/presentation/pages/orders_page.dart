@@ -132,10 +132,10 @@ class _OrdersPageState extends State<OrdersPage> {
 
   Widget _buildOrderCard(OrderModel order) {
     final isDone = order.status.toLowerCase() == 'selesai';
-    final statusColor = isDone ? AppTheme.successColor : const Color(0xFFD97706);
+    final statusColor = isDone ? AppTheme.successColor : AppTheme.warningColor;
     final statusBg = isDone
-        ? AppTheme.successColor.withOpacity(0.12)
-        : AppTheme.secondaryColor.withOpacity(0.18);
+        ? AppTheme.successColor.withValues(alpha: 0.12)
+        : AppTheme.warningColor.withValues(alpha: 0.12);
 
     return Container(
       decoration: BoxDecoration(
@@ -143,7 +143,7 @@ class _OrdersPageState extends State<OrdersPage> {
         borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 14,
             offset: const Offset(0, 6),
           ),

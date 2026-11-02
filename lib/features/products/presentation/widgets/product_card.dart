@@ -55,7 +55,7 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(22),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 14,
               offset: const Offset(0, 6),
             ),
@@ -90,7 +90,7 @@ class ProductCard extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.star_rounded, size: 14, color: AppTheme.secondaryColor),
+                            const Icon(Icons.star_rounded, size: 14, color: AppTheme.starColor),
                             const SizedBox(width: 3),
                             Text(
                               product.rating.toStringAsFixed(1),

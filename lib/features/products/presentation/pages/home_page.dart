@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.primaryColor.withOpacity(0.35),
+                        color: AppTheme.primaryColor.withValues(alpha: 0.35),
                         blurRadius: 12,
                         offset: const Offset(0, 5),
                       ),
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.25),
+                                color: Colors.white.withValues(alpha: 0.25),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Text(

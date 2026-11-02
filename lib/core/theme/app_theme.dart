@@ -6,7 +6,7 @@
  * 
  * 1. APA FUNGSI FILE ATAU PERINTAH TERSEBUT:
  *    Mendefinisikan sistem desain visual (ThemeData) aplikasi Foodie: palet warna
- *    makanan yang menggugah selera (vibrant warm orange), tipografi modern,
+ *    hijau segar alami (vibrant fresh green), tipografi modern,
  *    gaya tombol, input form, card, dan navigasi.
  * 
  * 2. MENGAPA KITA MEMBUTUHKANNYA:
@@ -24,23 +24,25 @@
  *    Pasang `theme: AppTheme.lightTheme` pada `MaterialApp` di `main.dart`.
  * 
  * 6. HASIL YANG SEHARUSNYA MUNCUL:
- *    Aplikasi menampilkan tema warna oranye hangat modern dengan kartu dan tombol yang rapi.
+ *    Aplikasi menampilkan tema warna hijau segar modern dengan kartu dan tombol yang rapi.
  * ============================================================================
  */
 
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Palet Warna Utama Foodie
-  static const Color primaryColor = Color(0xFF16A34A); // Warm Vibrant Coral Orange
-  static const Color primaryDark = Color(0xFF16A34A);
-  static const Color primaryLight = Color(0xFFDCFCE7);
-  static const Color secondaryColor = Color(0xFFDCFCE7); // Warm Amber
+  // Palet Warna Utama Foodie (Tema Hijau Segar)
+  static const Color primaryColor = Color(0xFF16A34A); // Vibrant Fresh Green 600
+  static const Color primaryDark = Color(0xFF15803D); // Forest Green 700 (teks kontras tinggi)
+  static const Color primaryLight = Color(0xFFDCFCE7); // Soft Mint Green 100 (badge & highlight)
+  static const Color secondaryColor = Color(0xFF22C55E); // Fresh Leaf Green 500
+  static const Color starColor = Color(0xFFF59E0B); // Amber / Gold untuk rating bintang
+  static const Color warningColor = Color(0xFFD97706); // Amber untuk status pesanan proses
   static const Color backgroundColor = Color(0xFFF8FAFC); // Clean Soft Slate
   static const Color surfaceColor = Colors.white;
   static const Color textPrimary = Color(0xFF1E293B);
   static const Color textSecondary = Color(0xFF64748B);
-  static const Color successColor = Color(0xFF10B981);
+  static const Color successColor = Color(0xFF16A34A);
   static const Color errorColor = Color(0xFFEF4444);
   static const Color borderColor = Color(0xFFE2E8F0);
 
@@ -126,6 +128,28 @@ class AppTheme {
           borderRadius: BorderRadius.circular(18),
           side: const BorderSide(color: borderColor, width: 0.8),
         ),
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: primaryColor,
+        foregroundColor: Colors.white,
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: primaryColor,
+      ),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: primaryColor,
+        selectionColor: primaryLight,
+        selectionHandleColor: primaryColor,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return primaryColor;
+          return null;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return primaryLight;
+          return null;
+        }),
       ),
     );
   }
