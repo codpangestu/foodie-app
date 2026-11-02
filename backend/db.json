@@ -298,6 +298,24 @@
       "totalAmount": 65000,
       "status": "Diproses",
       "paymentMethod": "QRIS"
+    },
+    {
+      "id": "ORD-40847517",
+      "orderDate": "2026-11-03T01:34:07.517820",
+      "customerName": "Budi Santoso",
+      "customerAddress": "Jl. Sudirman No. 45, Jakarta Selatan",
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Nasi Goreng Spesial",
+          "price": 28000,
+          "quantity": 2,
+          "imageUrl": "https://i.pinimg.com/1200x/d3/7b/f1/d37bf17c96e03b533f0f4b1c9b130011.jpg"
+        }
+      ],
+      "totalAmount": 56000,
+      "status": "Diproses",
+      "paymentMethod": "QRIS"
     }
   ]
 }
