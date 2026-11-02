@@ -56,62 +56,83 @@ class MainNavigationScaffold extends StatelessWidget {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          border: const Border(
-            top: BorderSide(color: AppTheme.borderColor, width: 0.8),
-          ),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 16,
+              offset: const Offset(0, -4),
             ),
           ],
         ),
-        child: Consumer<CartProvider>(
-          builder: (context, cart, _) {
-            final cartCount = cart.totalItemCount;
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          child: Consumer<CartProvider>(
+            builder: (context, cart, _) {
+              final cartCount = cart.totalItemCount;
 
-            return NavigationBar(
-              selectedIndex: navigationShell.currentIndex,
-              onDestinationSelected: (index) => _onTap(context, index),
-              backgroundColor: Colors.white,
-              indicatorColor: AppTheme.primaryLight,
-              surfaceTintColor: Colors.transparent,
-              elevation: 0,
-              destinations: [
-                const NavigationDestination(
-                  icon: Icon(Icons.restaurant_menu_outlined),
-                  selectedIcon: Icon(Icons.restaurant_menu_rounded, color: AppTheme.primaryColor),
-                  label: 'Home',
+              return NavigationBarTheme(
+                data: NavigationBarThemeData(
+                  height: 68,
+                  indicatorShape: const StadiumBorder(),
+                  labelTextStyle: WidgetStateProperty.resolveWith((states) {
+                    final selected = states.contains(WidgetState.selected);
+                    return TextStyle(
+                      fontSize: 12,
+                      fontWeight: selected ? FontWeight.bold : FontWeight.w500,
+                      color: selected ? AppTheme.primaryColor : AppTheme.textSecondary,
+                    );
+                  }),
+                  iconTheme: WidgetStateProperty.resolveWith((states) {
+                    final selected = states.contains(WidgetState.selected);
+                    return IconThemeData(
+                      color: selected ? AppTheme.primaryColor : AppTheme.textSecondary,
+                    );
+                  }),
                 ),
-                NavigationDestination(
-                  icon: Badge(
-                    isLabelVisible: cartCount > 0,
-                    label: Text('$cartCount'),
-                    backgroundColor: AppTheme.primaryColor,
-                    child: const Icon(Icons.shopping_bag_outlined),
-                  ),
-                  selectedIcon: Badge(
-                    isLabelVisible: cartCount > 0,
-                    label: Text('$cartCount'),
-                    backgroundColor: AppTheme.primaryColor,
-                    child: const Icon(Icons.shopping_bag_rounded, color: AppTheme.primaryColor),
-                  ),
-                  label: 'Keranjang',
+                child: NavigationBar(
+                  selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: (index) => _onTap(context, index),
+                  backgroundColor: Colors.white,
+                  indicatorColor: AppTheme.primaryLight,
+                  surfaceTintColor: Colors.transparent,
+                  elevation: 0,
+                  destinations: [
+                    const NavigationDestination(
+                      icon: Icon(Icons.restaurant_menu_outlined),
+                      selectedIcon: Icon(Icons.restaurant_menu_rounded),
+                      label: 'Home',
+                    ),
+                    NavigationDestination(
+                      icon: Badge(
+                        isLabelVisible: cartCount > 0,
+                        label: Text('$cartCount'),
+                        backgroundColor: AppTheme.errorColor,
+                        child: const Icon(Icons.shopping_bag_outlined),
+                      ),
+                      selectedIcon: Badge(
+                        isLabelVisible: cartCount > 0,
+                        label: Text('$cartCount'),
+                        backgroundColor: AppTheme.errorColor,
+                        child: const Icon(Icons.shopping_bag_rounded),
+                      ),
+                      label: 'Keranjang',
+                    ),
+                    const NavigationDestination(
+                      icon: Icon(Icons.receipt_long_outlined),
+                      selectedIcon: Icon(Icons.receipt_long_rounded),
+                      label: 'Pesanan',
+                    ),
+                    const NavigationDestination(
+                      icon: Icon(Icons.admin_panel_settings_outlined),
+                      selectedIcon: Icon(Icons.admin_panel_settings_rounded),
+                      label: 'Admin',
+                    ),
+                  ],
                 ),
-                const NavigationDestination(
-                  icon: Icon(Icons.receipt_long_outlined),
-                  selectedIcon: Icon(Icons.receipt_long_rounded, color: AppTheme.primaryColor),
-                  label: 'Pesanan',
-                ),
-                const NavigationDestination(
-                  icon: Icon(Icons.admin_panel_settings_outlined),
-                  selectedIcon: Icon(Icons.admin_panel_settings_rounded, color: AppTheme.primaryColor),
-                  label: 'Admin',
-                ),
-              ],
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
