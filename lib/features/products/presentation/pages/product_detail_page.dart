@@ -75,6 +75,30 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     }
   }
 
+  // Tombol bulat putih di atas foto (hanya tampilan)
+  Widget _circleButton({required IconData icon, required Color color, required VoidCallback onPressed}) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.12),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: IconButton(
+          icon: Icon(icon, color: color),
+          onPressed: onPressed,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final subtotal = widget.product.price * _quantity;
@@ -83,37 +107,46 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
-          // AppBar Gambar Makanan
+          // Foto Makanan + panel melengkung
           SliverAppBar(
-            expandedHeight: 280,
+            expandedHeight: 320,
             pinned: true,
             backgroundColor: Colors.white,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                backgroundColor: Colors.white.withOpacity(0.9),
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
-                  onPressed: () => context.pop(),
-                ),
-              ),
+            surfaceTintColor: Colors.transparent,
+            leading: _circleButton(
+              icon: Icons.arrow_back_rounded,
+              color: AppTheme.textPrimary,
+              onPressed: () => context.pop(),
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  child: IconButton(
-                    icon: const Icon(Icons.favorite_border_rounded, color: AppTheme.primaryColor),
-                    onPressed: () {},
-                  ),
-                ),
+              _circleButton(
+                icon: Icons.favorite_border_rounded,
+                color: AppTheme.primaryColor,
+                onPressed: () {},
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
-              background: CustomImageView(
-                imageUrl: widget.product.imageUrl,
-                fit: BoxFit.cover,
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CustomImageView(
+                    imageUrl: widget.product.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  // Panel putih melengkung yang menimpa foto
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: -1,
+                    child: Container(
+                      height: 28,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -121,7 +154,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           // Konten Informasi Produk
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -133,38 +166,46 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: AppTheme.primaryLight,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           widget.product.categoryName,
                           style: const TextStyle(
-                            color: AppTheme.primaryColor,
+                            color: AppTheme.primaryDark,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          const Icon(Icons.star_rounded, color: AppTheme.secondaryColor, size: 20),
-                          const SizedBox(width: 4),
-                          Text(
-                            widget.product.rating.toStringAsFixed(1),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: AppTheme.textPrimary,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: AppTheme.backgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.star_rounded, color: AppTheme.secondaryColor, size: 18),
+                            const SizedBox(width: 4),
+                            Text(
+                              widget.product.rating.toStringAsFixed(1),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: AppTheme.textPrimary,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '(${widget.product.reviewCount} ulasan)',
-                            style: const TextStyle(
-                              color: AppTheme.textSecondary,
-                              fontSize: 12,
+                            const SizedBox(width: 4),
+                            Text(
+                              '(${widget.product.reviewCount})',
+                              style: const TextStyle(
+                                color: AppTheme.textSecondary,
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -174,26 +215,64 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Text(
                     widget.product.name,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
 
                   // Harga Satuan
                   Text(
                     CurrencyFormatter.formatRupiah(widget.product.price),
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.primaryColor,
                     ),
                   ),
                   const SizedBox(height: 20),
 
-                  const Divider(color: AppTheme.borderColor),
-                  const SizedBox(height: 16),
+                  // Kartu info stok
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: AppTheme.backgroundColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.inventory_2_outlined,
+                              size: 18, color: AppTheme.primaryColor),
+                        ),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Ketersediaan',
+                              style: TextStyle(fontSize: 11, color: AppTheme.textSecondary),
+                            ),
+                            Text(
+                              'Sisa stok: ${widget.product.stock} porsi',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
 
                   // Deskripsi
                   const Text(
@@ -215,23 +294,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Informasi Stok
-                  Row(
-                    children: [
-                      const Icon(Icons.inventory_2_outlined, size: 18, color: AppTheme.textSecondary),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Sisa stok: ${widget.product.stock} porsi',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: AppTheme.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-
                   // Catatan Pesanan
                   const Text(
                     'Catatan Khusus (Opsional)',
@@ -244,9 +306,23 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   const SizedBox(height: 8),
                   TextField(
                     controller: _noteController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Contoh: Jangan terlalu pedas, kuah dipisah...',
-                      prefixIcon: Icon(Icons.edit_note_rounded, color: AppTheme.textSecondary),
+                      prefixIcon: const Icon(Icons.edit_note_rounded, color: AppTheme.textSecondary),
+                      filled: true,
+                      fillColor: AppTheme.backgroundColor,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: AppTheme.primaryColor, width: 1.5),
+                      ),
                     ),
                     maxLines: 2,
                   ),
@@ -258,9 +334,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
 
-      // Bottom Bar Checkout
+      // Bottom Bar berbentuk pil
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -278,7 +354,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               Container(
                 decoration: BoxDecoration(
                   color: AppTheme.backgroundColor,
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: AppTheme.borderColor),
                 ),
                 child: Row(
@@ -296,49 +372,60 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.add_rounded, size: 20),
+                      icon: const Icon(Icons.add_rounded, size: 20, color: AppTheme.primaryColor),
                       onPressed: _increment,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
 
               // Tombol Tambah Keranjang
               Expanded(
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                   onPressed: widget.product.stock > 0
-                      ? () {
-                          context.read<CartProvider>().addToCart(
-                                widget.product,
-                                quantity: _quantity,
-                                note: _noteController.text.trim(),
-                              );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Row(
-                                children: [
-                                  const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text('$_quantity x ${widget.product.name} dimasukkan ke keranjang'),
-                                  ),
-                                ],
-                              ),
-                              backgroundColor: AppTheme.successColor,
-                              behavior: SnackBarBehavior.floating,
-                              action: SnackBarAction(
-                                label: 'Lihat Keranjang',
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  context.push('/cart');
-                                },
-                              ),
-                            ),
-                          );
-                          context.pop();
-                        }
-                      : null,
+    ? () {
+        final cart = context.read<CartProvider>();
+        final messenger = ScaffoldMessenger.of(context);
+        final router = GoRouter.of(context);
+
+        cart.addToCart(
+          widget.product,
+          quantity: _quantity,
+          note: _noteController.text.trim(),
+        );
+        messenger.hideCurrentSnackBar();
+        messenger.showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text('$_quantity x ${widget.product.name} dimasukkan ke keranjang'),
+                ),
+              ],
+            ),
+            backgroundColor: AppTheme.successColor,
+            behavior: SnackBarBehavior.floating,
+            persist: false,
+            duration: const Duration(seconds: 3),
+            action: SnackBarAction(
+              label: 'Lihat Keranjang',
+              textColor: Colors.white,
+              onPressed: () => router.go('/cart'),
+            ),
+          ),
+        );
+        router.pop();
+      }
+    : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

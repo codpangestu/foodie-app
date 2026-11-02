@@ -156,10 +156,10 @@ class _HomePageState extends State<HomePage> {
                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF5E3A), Color(0xFFFF9068)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                    gradient: LinearGradient(
+                    colors: [AppTheme.primaryColor, Color(0xFF4ADE80)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                     sliver: SliverGrid(
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.72,
+                        childAspectRatio: 0.78,
                         crossAxisSpacing: 14,
                         mainAxisSpacing: 14,
                       ),

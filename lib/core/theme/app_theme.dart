@@ -32,10 +32,10 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // Palet Warna Utama Foodie
-  static const Color primaryColor = Color(0xFFFF5E3A); // Warm Vibrant Coral Orange
-  static const Color primaryDark = Color(0xFFE04522);
-  static const Color primaryLight = Color(0xFFFFECE8);
-  static const Color secondaryColor = Color(0xFFFFB800); // Warm Amber
+  static const Color primaryColor = Color(0xFF16A34A); // Warm Vibrant Coral Orange
+  static const Color primaryDark = Color(0xFF16A34A);
+  static const Color primaryLight = Color(0xFFDCFCE7);
+  static const Color secondaryColor = Color(0xFFDCFCE7); // Warm Amber
   static const Color backgroundColor = Color(0xFFF8FAFC); // Clean Soft Slate
   static const Color surfaceColor = Colors.white;
   static const Color textPrimary = Color(0xFF1E293B);
