@@ -158,13 +158,13 @@
       "isAvailable": true
     },
     {
-      "id": "1793642220391",
+      "id": "1793643645634",
       "name": "sayur asem",
-      "description": "bumbu segar dengan cita rasa khas",
+      "description": "cita rasa khas dengan kuah segar",
       "price": 15000,
       "categoryId": "cat-1",
       "categoryName": "Makanan Utama",
-      "imageUrl": "https://i.pinimg.com/1200x/c0/b6/34/c0b634700fbbddcdc963299b31374d84.jpg",
+      "imageUrl": "https://i.pinimg.com/736x/17/bb/26/17bb26ccec4353f9abfb74ac0e9503f5.jpg",
       "rating": 4.8,
       "reviewCount": 1,
       "stock": 20,
