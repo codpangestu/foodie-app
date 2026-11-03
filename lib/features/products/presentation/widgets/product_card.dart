@@ -52,13 +52,12 @@ class ProductCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: AppTheme.borderColor, width: 0.8),
+          borderRadius: BorderRadius.circular(22),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 14,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
@@ -67,50 +66,53 @@ class ProductCard extends StatelessWidget {
           children: [
             // Gambar Produk & Rating Badge
             Expanded(
-              flex: 5,
-              child: Stack(
-                children: [
-                  CustomImageView(
-                    imageUrl: product.imageUrl,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                  // Rating Badge
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.star_rounded, size: 14, color: AppTheme.secondaryColor),
-                          const SizedBox(width: 4),
-                          Text(
-                            product.rating.toStringAsFixed(1),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Stack(
+                  children: [
+                    CustomImageView(
+                      imageUrl: product.imageUrl,
+                      borderRadius: BorderRadius.circular(16),
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                    // Rating Badge (kiri atas)
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.star_rounded, size: 14, color: AppTheme.starColor),
+                            const SizedBox(width: 3),
+                            Text(
+                              product.rating.toStringAsFixed(1),
+                              style: const TextStyle(
+                                color: AppTheme.textPrimary,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             // Informasi Produk
             Expanded(
-              flex: 5,
+              flex: 4,
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.fromLTRB(12, 2, 12, 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,15 +120,24 @@ class ProductCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          product.categoryName,
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.primaryColor,
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryLight,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            product.categoryName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.primaryDark,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 6),
                         Text(
                           product.name,
                           maxLines: 1,
@@ -148,19 +159,19 @@ class ProductCard extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: AppTheme.textPrimary,
+                              color: AppTheme.primaryColor,
                             ),
                           ),
                         ),
-                        // Quick Add Button
+                        // Quick Add Button (bulat)
                         InkWell(
                           onTap: onAddToCart,
-                          borderRadius: BorderRadius.circular(10),
+                          customBorder: const CircleBorder(),
                           child: Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
+                            padding: const EdgeInsets.all(7),
+                            decoration: const BoxDecoration(
                               color: AppTheme.primaryColor,
-                              borderRadius: BorderRadius.circular(10),
+                              shape: BoxShape.circle,
                             ),
                             child: const Icon(
                               Icons.add_rounded,

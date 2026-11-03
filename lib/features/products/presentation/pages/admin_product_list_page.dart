@@ -246,7 +246,7 @@ class AdminProductListPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: const Icon(Icons.edit_outlined, color: Colors.blueAccent),
+                icon: const Icon(Icons.edit_outlined, color: AppTheme.primaryColor),
                 tooltip: 'Edit Produk',
                 onPressed: () {
                   context.push('/admin/product-form', extra: product);

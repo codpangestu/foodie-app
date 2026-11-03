@@ -38,6 +38,35 @@ import '../../../products/presentation/widgets/loading_widget.dart';
 import '../../models/order_model.dart';
 import '../providers/order_provider.dart';
 
+// Garis putus-putus pemisah (hanya tampilan)
+class _DashedDivider extends StatelessWidget {
+  const _DashedDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const dashWidth = 6.0;
+        const dashGap = 4.0;
+        final count = (constraints.maxWidth / (dashWidth + dashGap)).floor();
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            count,
+            (_) => const SizedBox(
+              width: dashWidth,
+              height: 1.2,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: AppTheme.borderColor),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class OrdersPage extends StatefulWidget {
   const OrdersPage({super.key});
 
@@ -103,133 +132,184 @@ class _OrdersPageState extends State<OrdersPage> {
 
   Widget _buildOrderCard(OrderModel order) {
     final isDone = order.status.toLowerCase() == 'selesai';
+    final statusColor = isDone ? AppTheme.successColor : AppTheme.warningColor;
+    final statusBg = isDone
+        ? AppTheme.successColor.withValues(alpha: 0.12)
+        : AppTheme.warningColor.withValues(alpha: 0.12);
 
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppTheme.borderColor),
+        borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 14,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
-      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Baris Header: ID & Status
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                order.id,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  color: AppTheme.textPrimary,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isDone ? AppTheme.successColor.withOpacity(0.12) : AppTheme.secondaryColor.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  order.status,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: isDone ? AppTheme.successColor : const Color(0xFFD97706),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-
-          // Waktu Pemesanan
-          Text(
-            CurrencyFormatter.formatDate(order.orderDate),
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppTheme.textSecondary,
-            ),
-          ),
-          const SizedBox(height: 12),
-          const Divider(color: AppTheme.borderColor),
-          const SizedBox(height: 8),
-
-          // Daftar Item
-          Column(
-            children: order.items.map((item) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header: ikon, ID, tanggal, status
+                Row(
                   children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: AppTheme.primaryLight,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.receipt_long_rounded,
+                          size: 20, color: AppTheme.primaryColor),
+                    ),
+                    const SizedBox(width: 12),
                     Expanded(
-                      child: Text(
-                        '${item.quantity}x ${item.productName}',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: AppTheme.textPrimary,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            order.id,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            CurrencyFormatter.formatDate(order.orderDate),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppTheme.textSecondary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      CurrencyFormatter.formatRupiah(item.price * item.quantity),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: statusBg,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            isDone ? Icons.check_circle_rounded : Icons.access_time_rounded,
+                            size: 14,
+                            color: statusColor,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            order.status,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: statusColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              );
-            }).toList(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  child: _DashedDivider(),
+                ),
+
+                // Daftar Item
+                Column(
+                  children: order.items.map((item) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              '${item.quantity}x ${item.productName}',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: AppTheme.textPrimary,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            CurrencyFormatter.formatRupiah(item.price * item.quantity),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
           ),
 
-          const SizedBox(height: 12),
-          const Divider(color: AppTheme.borderColor),
-          const SizedBox(height: 8),
-
-          // Total Pembayaran & Metode
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.qr_code_rounded, size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 4),
-                  Text(
-                    order.paymentMethod,
-                    style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+          // Bar total di bagian bawah kartu
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: const BoxDecoration(
+              color: AppTheme.primaryLight,
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(22)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'Total: ',
-                    style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.qr_code_rounded,
+                          size: 14, color: AppTheme.textSecondary),
+                      const SizedBox(width: 4),
+                      Text(
+                        order.paymentMethod,
+                        style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+                      ),
+                    ],
                   ),
-                  Text(
-                    CurrencyFormatter.formatRupiah(order.totalAmount),
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryColor,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Total: ',
+                      style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Text(
+                      CurrencyFormatter.formatRupiah(order.totalAmount),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primaryDark,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

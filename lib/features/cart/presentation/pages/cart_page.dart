@@ -39,6 +39,35 @@ import '../../../products/presentation/widgets/custom_image_view.dart';
 import '../../../products/presentation/widgets/empty_state_widget.dart';
 import '../providers/cart_provider.dart';
 
+// Garis putus-putus pemisah (hanya tampilan)
+class _DashedDivider extends StatelessWidget {
+  const _DashedDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const dashWidth = 6.0;
+        const dashGap = 4.0;
+        final count = (constraints.maxWidth / (dashWidth + dashGap)).floor();
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            count,
+            (_) => const SizedBox(
+              width: dashWidth,
+              height: 1.2,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: AppTheme.borderColor),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
@@ -99,7 +128,7 @@ class CartPage extends StatelessWidget {
                 width: 72,
                 height: 72,
                 decoration: BoxDecoration(
-                  color: AppTheme.successColor.withOpacity(0.12),
+                  color: AppTheme.successColor.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.check_circle_rounded, color: AppTheme.successColor, size: 48),
@@ -201,143 +230,156 @@ class CartPage extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
                   itemCount: items.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 14),
+                  separatorBuilder: (_, __) => const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14),
+                    child: _DashedDivider(),
+                  ),
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppTheme.borderColor),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.03),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Gambar Thumbnail
-                          CustomImageView(
-                            imageUrl: item.imageUrl,
-                            width: 72,
-                            height: 72,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          const SizedBox(width: 14),
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Gambar Thumbnail
+                        CustomImageView(
+                          imageUrl: item.imageUrl,
+                          width: 84,
+                          height: 84,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        const SizedBox(width: 14),
 
-                          // Detail Teks
-                          Expanded(
+                        // Detail + stepper
+                        Expanded(
+                          child: SizedBox(
+                            height: 84,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  item.productName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppTheme.textPrimary,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  CurrencyFormatter.formatRupiah(item.price),
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppTheme.primaryColor,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                if (item.note.isNotEmpty) ...[
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'Catatan: ${item.note}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                      fontStyle: FontStyle.italic,
-                                      color: AppTheme.textSecondary,
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-
-                          // Tombol Kuantitas & Hapus
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                constraints: const BoxConstraints(),
-                                padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.delete_outline_rounded, size: 20, color: AppTheme.errorColor),
-                                onPressed: () => _showDeleteConfirmation(context, item.productId, item.productName),
-                              ),
-                              const SizedBox(height: 8),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: AppTheme.backgroundColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: AppTheme.borderColor),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        if (item.quantity > 1) {
-                                          cart.updateQuantity(item.productId, item.quantity - 1);
-                                        } else {
-                                          _showDeleteConfirmation(context, item.productId, item.productName);
-                                        }
-                                      },
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                        child: Icon(Icons.remove, size: 16),
-                                      ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            item.productName,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppTheme.textPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          customBorder: const CircleBorder(),
+                                          onTap: () => _showDeleteConfirmation(
+                                              context, item.productId, item.productName),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(2),
+                                            child: Icon(Icons.delete_outline_rounded,
+                                                size: 20, color: AppTheme.errorColor),
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    if (item.note.isNotEmpty)
+                                      Text(
+                                        'Catatan: ${item.note}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                          fontStyle: FontStyle.italic,
+                                          color: AppTheme.textSecondary,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
                                     Text(
-                                      '${item.quantity}',
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                                    ),
-                                    InkWell(
-                                      onTap: () => cart.updateQuantity(item.productId, item.quantity + 1),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                        child: Icon(Icons.add, size: 16),
+                                      CurrencyFormatter.formatRupiah(item.price),
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        color: AppTheme.primaryColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
+                                    ),
+                                    // Stepper bulat
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        InkWell(
+                                          customBorder: const CircleBorder(),
+                                          onTap: () {
+                                            if (item.quantity > 1) {
+                                              cart.updateQuantity(item.productId, item.quantity - 1);
+                                            } else {
+                                              _showDeleteConfirmation(
+                                                  context, item.productId, item.productName);
+                                            }
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(color: AppTheme.borderColor),
+                                            ),
+                                            child: const Icon(Icons.remove,
+                                                size: 16, color: AppTheme.textPrimary),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                                          child: Text(
+                                            '${item.quantity}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold, fontSize: 14),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          customBorder: const CircleBorder(),
+                                          onTap: () =>
+                                              cart.updateQuantity(item.productId, item.quantity + 1),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: AppTheme.primaryColor,
+                                            ),
+                                            child: const Icon(Icons.add,
+                                                size: 16, color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   },
                 ),
               ),
 
-              // Rincian Pembayaran & Tombol Checkout
+              // Ringkasan & Tombol Checkout
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
+                      color: Colors.black.withValues(alpha: 0.06),
                       blurRadius: 16,
                       offset: const Offset(0, -4),
                     ),
@@ -345,7 +387,32 @@ class CartPage extends StatelessWidget {
                 ),
                 child: SafeArea(
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Subtotal (${items.length} menu)',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppTheme.textSecondary,
+                            ),
+                          ),
+                          Text(
+                            CurrencyFormatter.formatRupiah(cart.totalAmount),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: _DashedDivider(),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -353,8 +420,8 @@ class CartPage extends StatelessWidget {
                             'Total Pembayaran',
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.textSecondary,
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.textPrimary,
                             ),
                           ),
                           Text(
@@ -373,6 +440,12 @@ class CartPage extends StatelessWidget {
                         child: Consumer<OrderProvider>(
                           builder: (context, orderProv, _) {
                             return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
                               onPressed: orderProv.isLoading ? null : () => _handleCheckout(context),
                               child: orderProv.isLoading
                                   ? const SizedBox(
@@ -380,7 +453,16 @@ class CartPage extends StatelessWidget {
                                       width: 20,
                                       child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                                     )
-                                  : const Text('Checkout Pesanan Sekarang'),
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text('Checkout'),
+                                        Text(
+                                          CurrencyFormatter.formatRupiah(cart.totalAmount),
+                                          style: const TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                             );
                           },
                         ),
